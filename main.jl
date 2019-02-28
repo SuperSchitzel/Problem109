@@ -12,8 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#Project Euler Problem 109
-#=
+#=Project Euler Problem 109
 In the game of darts a player throws three darts at a target board which is split into twenty equal sized sections numbered one to twenty.
 The score of a dart is determined by the number of the region that the dart lands in. A dart landing outside the red/green outer ring scores zero. The black and cream regions inside this ring represent single scores. However, the red/green outer ring and middle ring score double and treble scores respectively.
 At the centre of the board are two concentric circles called the bull region, or bulls-eye. The outer bull is worth 25 points and the inner bull is a double, worth 50 points.
@@ -47,6 +46,10 @@ using Statistics
 global posNums = []
 #List of all the starting (ending) values  (doubles)
 global doubleNums = []
+#List of all the combinations found so far, stored as strings
+global foundCombinations  = []
+#List of all the combination found, but stored as sorted strings
+global sortedCombinations = []
 
 #Function to fill the array with all the possible numbers, no return value
 function fillArray()
@@ -71,6 +74,7 @@ function oneStep()
     for i in doubleNums
         withOneStep += 1
     end
+    #No need to save to the foundArray, because there can not be any duplicates
     return withOneStep
 end
 
@@ -80,10 +84,9 @@ function twoSteps()
     #Loop through both arrays at once
     for i in doubleNums, j in posNums
         #Only use combinations where the sum of both is less than 100
-        if i + j >= 100
-            continue
-        else
+        if i + j < 100
             withTwoSteps += 1
+            push!(foundCombinations, (repr(i) * repr(j)))
         end
     end
     return withTwoSteps
@@ -95,9 +98,7 @@ function threeSteps()
     #Loop through the doubleNums array once, and through all the numbers twice
     for i in doubleNums, j in posNums, k in posNums
         #Only use combinations where the sum of all three of them is less than 100
-        if i + j + k >= 100
-            continue
-        else
+        if i + j + k < 100
             withThreeSteps += 1
         end
     end
@@ -114,6 +115,10 @@ function main()
     result3 = threeSteps()
     finalResult = result1 + result2 + result3
     println("Final result: ", finalResult)
+    println(posNums)
+    println(doubleNums)
+    println("-----")
+    println(foundCombinations)
 end
 
 ##########
