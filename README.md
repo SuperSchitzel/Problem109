@@ -14,7 +14,7 @@
  limitations under the License.
 -->
 
-## Project Euler Problem 109
+# Project Euler Problem 109
 by Jeykey
 
-# Using the Julia Programming Language
+### Using the Julia Programming Language
