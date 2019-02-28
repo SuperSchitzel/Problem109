@@ -53,6 +53,8 @@ function fillArray()
         push!(posNums, i * 2)
         push!(posNums, i * 3)
     end
+    #Special case for the middle two
     middle = 25
     push!(posNums, middle)
     push!(posNums, middle * 2)
+end
