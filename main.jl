@@ -44,7 +44,9 @@ using Printf
 using Statistics
 
 #List of all the possible numbers in a game of dart
-posNums = []
+global posNums = []
+#List of all the starting (ending) values  (doubles)
+global doubleNums = []
 
 #Function to fill the array with all the possible numbers, no return value
 function fillArray()
@@ -52,9 +54,67 @@ function fillArray()
         push!(posNums, i)
         push!(posNums, i * 2)
         push!(posNums, i * 3)
+        #Also push to doubleNums array, for the starting values
+        push!(doubleNums, i * 2)
     end
     #Special case for the middle two
     middle = 25
     push!(posNums, middle)
     push!(posNums, middle * 2)
+    #Add also to the starting values list
+    push!(doubleNums, middle * 2)
 end
+
+#Function for all the checkout ways with only one step
+function oneStep()
+    withOneStep = 0
+    for i in doubleNums
+        withOneStep += 1
+    end
+    return withOneStep
+end
+
+#Function for all the checkout ways with two steps
+function twoSteps()
+    withTwoSteps = 0
+    #Loop through both arrays at once
+    for i in doubleNums, j in posNums
+        #Only use combinations where the sum of both is less than 100
+        if i + j >= 100
+            continue
+        else
+            withTwoSteps += 1
+        end
+    end
+    return withTwoSteps
+end
+
+#Function for all the checkout ways with three steps
+function threeSteps()
+    withThreeSteps = 0
+    #Loop through the doubleNums array once, and through all the numbers twice
+    for i in doubleNums, j in posNums, k in posNums
+        #Only use combinations where the sum of all three of them is less than 100
+        if i + j + k >= 100
+            continue
+        else
+            withThreeSteps += 1
+        end
+    end
+    return withThreeSteps
+end
+
+#Main function, only function, that calls other function
+function main()
+    # Step 1: Fill both arrays with the possible values
+    fillArray()
+    # Step 2: Check for all the diffrent 
+    result1 = oneStep()
+    result2 = twoSteps()
+    result3 = threeSteps()
+    finalResult = result1 + result2 + result3
+    println("Final result: ", finalResult)
+end
+
+##########
+main()
